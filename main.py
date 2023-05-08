@@ -1,17 +1,38 @@
-# This is a sample Python script.
+import csv
+import pandas as pd
 
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Strg+F8 to toggle the breakpoint.
+data = pd.read_csv("mitglieder.csv", on_bad_lines='skip', encoding="ISO-8859-1", sep=';', engine='python')
+data.dropna(subset=['Name'], how='any', inplace=True)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
-xxx
+data.dropna(subset=data.columns.difference(['Name']), how='all', inplace=True)
+# print(data)
+
+
+# print(data.columns)
+
+
+duplicates = data[data.duplicated()]
+# Loop through each duplicate row and print the selected columns
+for index, row in duplicates.iterrows():
+    print(f"Duplicate {index + 1}:")
+    print(row.loc[['Name']])
+
+data2 = data.drop_duplicates()
+
+similarity_threshold = 0.5 # Set the similarity threshold here
+similarity_cols = ['Name', 'Adresse ', 'Ort ',
+                   'Ansprechperson ']  # Set the columns to use for similarity comparison here
+similarity_group = data2.groupby(similarity_cols).size().reset_index(name='count')
+possible_duplicates = similarity_group[similarity_group['count'] > 1]
+
+# Print the possible duplicates
+print("ALLE DUPLIKATE")
+print(data.duplicated)
+print("MÖGLICHE DUPLIKATE NACH ÄHNLICHKEIT")
+print(possible_duplicates)
+# data2.to_csv('Mitglieder-bereinigt.csv')
+# data2.to_excel('Mitglieder.bereinigt.xlsx')
+
+print(data2)
