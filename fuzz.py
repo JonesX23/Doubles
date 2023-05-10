@@ -18,6 +18,7 @@ def similarity(s1, s2):
 
 # Define a threshold similarity score
 threshold = 90
+name_threshold = 85
 
 # Create an empty DataFrame to store the unique entries
 unique = pd.DataFrame(columns=df.columns)
@@ -39,9 +40,11 @@ for i, row1 in df.iterrows():
         sim2 = similarity(row1['Adresse'], row2['Adresse'])
         sim3 = similarity(row1['Ansprechperson'], row2['Ansprechperson'])
         sim4 = similarity(row1['Email 1'], row2['Email 1'])
+        sim5 = similarity(row1['Ort'], row2['Ort'])
+
 
         # If the similarity score is above the threshold, the rows are considered duplicates
-        if sim1 >= threshold and sim2 >= threshold and sim3 >= threshold and sim4 >= threshold:
+        if sim1 >= name_threshold and sim2 >= threshold and sim3 >= threshold and sim4 >= threshold and sim5>= threshold:
             is_unique = False
             break
 
@@ -52,6 +55,6 @@ for i, row1 in df.iterrows():
         non_unique = non_unique._append(row1, ignore_index=True)
 
 # The unique DataFrame contains only the unique entries
-unique.to_csv('UNIQUE3.csv')
-unique.to_excel('UNIQUE-EXCEL3.xlsx')
-non_unique.to_excel('removed.xlsx')
+unique.to_csv('UNIQUE5.csv')
+unique.to_excel('UNIQUE-EXCEL5.xlsx')
+non_unique.to_excel('removed3.xlsx')
