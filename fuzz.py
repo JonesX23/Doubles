@@ -1,7 +1,9 @@
 from fuzzywuzzy import fuzz
 import pandas as pd
-
+import time
 # Load the data into a DataFrame
+
+start_time = time.time()
 
 df = pd.read_csv("mitglieder.csv", on_bad_lines='skip', encoding="ISO-8859-1", sep=';', engine='python')
 # Remove exact duplicates
@@ -58,3 +60,9 @@ for i, row1 in df.iterrows():
 unique.to_csv('UNIQUE5.csv')
 unique.to_excel('UNIQUE-EXCEL5.xlsx')
 non_unique.to_excel('removed3.xlsx')
+
+
+end_time = time.time()
+timespent = end_time - start_time
+timespent = timespent / 60
+print(f"Das Script hat {timespent} Minuten gebraucht")
