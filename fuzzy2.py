@@ -1,6 +1,6 @@
 from rapidfuzz import fuzz
 import pandas as pd
-
+import time
 # Load the data from the first file into a DataFrame
 df1 = pd.read_excel('3000er.xlsx')
 
@@ -8,7 +8,7 @@ df1 = pd.read_excel('3000er.xlsx')
 df2 = pd.read_excel('UNIQUE6.xlsx')
 
 
-
+start_time = time.time()
 
 # Define a function to compare two strings and return a similarity score
 def similarity(s1, s2):
@@ -16,7 +16,7 @@ def similarity(s1, s2):
 
 
 # Define a threshold similarity score
-threshold = 90
+threshold = 80
 
 # Create an empty DataFrame to store the duplicates and similar instances
 duplicates = pd.DataFrame(columns=df1.columns)
@@ -39,5 +39,10 @@ for i, row1 in df1.iterrows():
             duplicates = duplicates._append(row2, ignore_index=True)
 
 # Save the duplicates and similar instances to a new file
-duplicates.to_csv('duplicates3000.csv', index=False)
-duplicates.to_excel('duplicates3000.xlsx')
+duplicates.to_csv('duplicates3000-80.csv', index=False)
+duplicates.to_excel('duplicates3000-80.xlsx')
+
+end_time = time.time()
+timespent = end_time - start_time
+timespent = timespent / 60
+print(f"Das Script hat {timespent} Minuten Dgebraucht")

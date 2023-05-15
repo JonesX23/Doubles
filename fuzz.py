@@ -5,7 +5,8 @@ import time
 
 start_time = time.time()
 
-df = pd.read_csv("mitglieder.csv", on_bad_lines='skip', encoding="ISO-8859-1", sep=';', engine='python')
+df = pd.read_excel("mitglieder.xlsx")
+#df = pd.read_excel("kontakte-final.xlsx")
 # Remove exact duplicates
 # Load the data into a DataFrame
 
@@ -57,9 +58,12 @@ for i, row1 in df.iterrows():
         non_unique = non_unique._append(row1, ignore_index=True)
 
 # The unique DataFrame contains only the unique entries
-unique.to_csv('UNIQUE5.csv')
-unique.to_excel('UNIQUE-EXCEL5.xlsx')
-non_unique.to_excel('removed3.xlsx')
+# unique.to_csv('Kontakte-final-bereinigt.csv')
+# unique.to_excel('Kontakte-final-bereinigt.xlsx')
+# non_unique.to_excel('Kontakte-final-removed.xlsx')
+unique.to_csv('Mitglieder-bereinigt1505.csv')
+unique.to_excel('Mitglieder-bereinigt1505.xlsx')
+non_unique.to_excel('Mitglieder-bereinigt1505-removed.xlsx')
 
 
 end_time = time.time()

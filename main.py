@@ -10,6 +10,7 @@ data.dropna(subset=['Name'], how='any', inplace=True)
 
 data.dropna(subset=data.columns.difference(['Name']), how='all', inplace=True)
 # print(data)
+data['Name'] = df['Name'].str.strip()
 
 
 # print(data.columns)
