@@ -5,7 +5,7 @@ import time
 
 start_time = time.time()
 
-df = pd.read_excel("mitglieder.xlsx")
+df = pd.read_excel("Mitglieder-stripped99.xlsx")
 #df = pd.read_excel("kontakte-final.xlsx")
 # Remove exact duplicates
 # Load the data into a DataFrame
@@ -20,8 +20,8 @@ def similarity(s1, s2):
 
 
 # Define a threshold similarity score
-threshold = 90
-name_threshold = 85
+threshold = 95
+# name_threshold = 85
 
 # Create an empty DataFrame to store the unique entries
 unique = pd.DataFrame(columns=df.columns)
@@ -39,15 +39,16 @@ for i, row1 in df.iterrows():
     for j, row2 in unique.iterrows():
 
         # Compare the fields (Name, Adresse, Ansprechperson, Email) using the rapidfuzz library
-        sim1 = similarity(row1['Name'], row2['Name'])
-        sim2 = similarity(row1['Adresse'], row2['Adresse'])
+        # sim1 = similarity(row1['Name'], row2['Name'])
+        # sim2 = similarity(row1['Adresse'], row2['Adresse'])
         sim3 = similarity(row1['Ansprechperson'], row2['Ansprechperson'])
-        sim4 = similarity(row1['Email 1'], row2['Email 1'])
-        sim5 = similarity(row1['Ort'], row2['Ort'])
+        # sim4 = similarity(row1['Email 1'], row2['Email 1'])
+        # sim5 = similarity(row1['Ort'], row2['Ort'])
 
 
         # If the similarity score is above the threshold, the rows are considered duplicates
-        if sim1 >= name_threshold and sim2 >= threshold and sim3 >= threshold and sim4 >= threshold and sim5>= threshold:
+        #if sim1 >= name_threshold and sim2 >= threshold and sim3 >= threshold and sim4 >= threshold and sim5>= threshold:
+        
             is_unique = False
             break
 
@@ -61,8 +62,8 @@ for i, row1 in df.iterrows():
 # unique.to_csv('Kontakte-final-bereinigt.csv')
 # unique.to_excel('Kontakte-final-bereinigt.xlsx')
 # non_unique.to_excel('Kontakte-final-removed.xlsx')
-unique.to_csv('Mitglieder-bereinigt1505.csv')
-unique.to_excel('Mitglieder-bereinigt1505.xlsx')
+
+unique.to_excel('Mitglieder-strip-Ansprechperson.xlsx')
 non_unique.to_excel('Mitglieder-bereinigt1505-removed.xlsx')
 
 
